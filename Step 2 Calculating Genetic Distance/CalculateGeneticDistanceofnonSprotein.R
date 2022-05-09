@@ -75,3 +75,52 @@ gd.nonS <- <- function(fn,vaccine,outpath,prot) {
     return(cb_mismatch)
   }
 } 
+
+# vaccine sequence
+# set reference sequence path
+pr1 <- pr[-18]
+prot1 <- paste("SARS-CoV-2",pr1,"protein",sep=" ")
+for (p in 1:length(pr1)) {
+  ref.strain <- paste(ref_path,"/Wuhan_reference_",pr1[p],".csv",sep="")
+  pre_seq <- read.csv(ref.strain,colClasses = c("factor"))
+  # testing sequence
+  # set input path
+  setwd(paste(inputpath,prot1[p],sep = "/"))
+  files <- list.files(pattern = ".csv")
+  # set output path to export mismatch sites
+  outpath <- paste(path,prot1[p],sep="/")
+  dir.create(outpath)
+  mm_table <- c()
+  for (f in 1:length(files)) {
+    mismatch <- gd.nonS(files[f],pre_seq,outpath,pr1[p])
+    mm_table <- rbind(mm_table,mismatch)
+  }
+  row.names(mm_table) <- files
+  colnames(mm_table) <- c(pr1[p],"sample size")
+  # set path to save non-S protein mismatch summary tables
+  write.csv(mm_table,file=paste(tarPath,paste(pr1[p],"mismatch.csv",sep=" "),sep="/"),row.names = TRUE)
+}
+
+setwd(tarPath)
+mm_table <- read.csv(file = paste("pr1[1],"mismatch.csv",sep=" "),colClasses = c("factor"))
+for (p in 2:length(pr1)) {
+  mismatch <- read.csv(file = paste("pr1[p],"mismatch.csv",sep=" "),colClasses = c("factor"))
+  mm_table <- cbind(mm_table,mismatch[,2])
+}
+colnames(mm_table)[1] <- c("filenames")
+colnames(mm_table)[4:31] <- pr1[2:29]
+names <- gsub("nsp1", "S", mm_table$filenames)
+mm_table$filenames <- names
+mm_table1 <- mm_table[,-3]
+write.csv(mm_table1,file="non-S protein mismatch.csv",sep=" ",row.names = TRUE)
+
+df <- read.csv("VE and S mismatch.csv", header = TRUE, fill = TRUE)
+ac_mm <- c()
+for (i in 1:length(df[,1])) {
+  row <- match(df$filenames[i],mm_table1$filenames)
+  extract_mismatch <- mm_table1[row,]
+  ac_mm <- rbind(ac_mm,extract_mismatch)
+}
+colnames(ac_mm) <- colnames(mm_table1)
+df1 <- cbind(df,ac_mm[,2:30])
+write.csv(df1,"VE and whole genome mismatch.csv",row.names = FALSE)

@@ -115,5 +115,5 @@ colnames(ac_mm) <- colnames(mm_table)
 tp1 <- cbind(tp,ac_mm)
 # set output path
 write.csv(mm_table,paste(output_path,"S protein mismatch.csv",sep="/"))
-write.csv(tp1,paste(output_path,"VE and mismatch.csv",sep="/"),row.names = FALSE)
+write.csv(tp1,paste(output_path,"VE and S mismatch.csv",sep="/"),row.names = FALSE)
 

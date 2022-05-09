@@ -62,6 +62,6 @@ for (p in 1:length(prot)) {
   e <- e.all[p]
   protein <- c(pr[p])
   for (n in 1:length(fasfiles) {  
-    read.fas(fasfiles[18],s,e,protein,outpath)
+    read.fas(fasfiles[n],s,e,protein,outpath)
   }
 }

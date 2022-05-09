@@ -3,7 +3,6 @@
 R codes for the article "Rapid evaluation of COVID-19 vaccine effectiveness against SARS-CoV-2 variants by genetic distance"
 
 This repository includes the following three folders:
-
   Step 1 Preparing data;
   Step 2 Calculating Genetic Distance;
   Step 3 Data Summary and Create Figures.

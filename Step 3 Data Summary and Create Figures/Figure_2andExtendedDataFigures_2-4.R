@@ -6,7 +6,7 @@ df$platforms <- factor(df$platforms,c("mRNA","Protein subunit","Inactivated","Vi
 cols_lmsp <- c("#00BFC4","#F8766D","#FFB90F","#C77CFF")  
 lm.sp <- function(df1,x1,y1,group1,type1,title) {
   splot <- ggplot() + 
-    stat_smooth(data=df1,aes(x = x1, y = y1,colour=group1,fill=group1),method,size=1,alpha=0.2) + 
+    stat_smooth(data=df1,aes(x = x1, y = y1,colour=group1,fill=group1),size=1,alpha=0.2) + 
     stat_smooth(data=df1, aes(x = x1, y = y1),method=lm,size=0.5,colour="grey50",fullrange = TRUE,
                 se=FALSE,linetype="dashed") + 
     geom_point(data=df1, aes(x = x1, y = y1,color=group1,shape=type1),size=3.6) 
@@ -31,7 +31,7 @@ lm.sp(df,df$All,df$VE,df$platforms,df$type,"(b) S protein")
 sp <- function(df1,x1,y1,type1,title) {
   splot <- ggplot() +
     geom_point(data=df1, aes(x = x1, y = y1,shape=type1),color="#00C091",size=3.6) +
-    stat_smooth(aes(x = x1, y = y1),method,color="#00C091",fill="#00C091",size=1,alpha=0.2)
+    stat_smooth(aes(x = x1, y = y1),color="#00C091",fill="#00C091",size=1,alpha=0.2)
   splot.edited <- splot + 
     scale_y_continuous(name="COVID-19 VE (%)",breaks=seq(0, 100, 25)) + scale_x_continuous(name = "Genetic distance",breaks=seq(0, 3, 1)) +
     theme_classic() + labs(title = title) +
@@ -86,7 +86,7 @@ d_model <- lmer(VE ~ RBD+(RBD|developer), data=df1) # age + TimeAfterSecondDose
 
 cols_psp <- c("#00BFC4","#F8766D","#FFB90F","#C77CFF") 
 p.sp <- function(df1,x1,y1,group1,type1,title) {
-  splot <- ggplot() + geom_point(data=df1, aes(x = x1, y = y1,colour=group1,shape=type1),size=3.6) ## ,colour=group,shape=group
+  splot <- ggplot() + geom_point(data=df1, aes(x = x1, y = y1,colour=group1,shape=type1),size=3.6) 
   
   splot.edited <- splot + 
     scale_y_continuous(name="COVID-19 VE (%)") + scale_x_continuous(name = "Genetic distance") + 

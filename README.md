@@ -6,7 +6,6 @@ This repository includes the following three folders:
   Step 1 Preparing data;
   Step 2 Calculating Genetic Distance;
   Step 3 Data Summary and Create Figures.
-
 Data analysis involved in this work can be performed with these codes. 
 
 Step 1 Preparing data: 

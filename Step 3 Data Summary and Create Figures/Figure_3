@@ -18,12 +18,12 @@ write.csv(vr_out,"validation data output.csv",row.names = FALSE)
 df <- read.csv("validation data.csv", header = TRUE, fill = TRUE)
 df$id <- factor(df$id,levels=rev(ord))
 
-p <- ggplot(df, aes(x= id, y = VE, color = VE_type)) + geom_hline(yintercept = 50,size=0.5,color="grey60",linetype="dashed") +
+vplot <- ggplot(df, aes(x= id, y = VE, color = VE_type)) + geom_hline(yintercept = 50,size=0.5,color="grey60",linetype="dashed") +
   geom_point(position = position_dodge(0.4),size=3) +
   geom_errorbar(aes(ymin = lower, ymax = upper), 
                 width = 0.2, position = position_dodge(0.4) )+coord_flip()
 
-plot <- p + scale_color_manual(values=alpha(c("#0099CC","#FF6666"),c(1,1)),  
+vplot_edited <- vplot + scale_color_manual(values=alpha(c("#0099CC","#FF6666"),c(1,1)),  
                                breaks=c("observed","estimated"),
                                labels=c("Observed\n(95% confidence interval)","Estimated\n(95% prediction interval)"),name="VE evaluation in\nindependent studies") +
   theme(axis.text.x = element_text(colour = "black"),
@@ -35,19 +35,19 @@ plot <- p + scale_color_manual(values=alpha(c("#0099CC","#FF6666"),c(1,1)),
         axis.ticks.y=element_blank(),axis.line.x = element_line(size=0.5,colour = "black") ) +
   scale_y_continuous(name="COVID-19 VE (%)",limits = c(-10,110),breaks=seq(-50, 100, 25),expand = c(0, 0)) +
   scale_x_discrete(name="",labels=label)
-plot
-ggsave(filename = "(220318) - validation.png", plot = plot,width = 6.5, height = 6.5)
+vplot_edited
+ggsave(filename = "(220318) - validation.png", plot = vplot_edited,width = 6.5, height = 6.5)
 
 # calibration plot
 splot <- ggplot(data=df, aes(x = pred_ve, y = VE)) + 
   geom_abline(intercept = 0, slope = 1,linetype="dotted",colour="#009999") +
   geom_point(size=3.6,color="#66CCCC") 
 
-splot.edited <- splot + 
+splot_edited <- splot + 
   annotate("text",label="CCC: 0.95 (95% CI: 0.88-0.98)", parse=FALSE, x=-Inf,y=Inf,hjust=-0.05,vjust=2,size=3.5) + 
   scale_y_continuous(name="Observed COVID-19 VE (%)",limits = c(0,100),breaks = seq(0,100,25)) +
   scale_x_continuous(name = "Estimated COVID-19 VE (%)",limits = c(0,100),breaks = seq(0,100,25)) + 
   theme_classic() + 
   theme(legend.position = "none") + coord_fixed(ratio = 1)
-print(splot.edited)
-ggsave(filename = "(220318) - calibration plot.png", plot = splot.edited,width = 3.5, height = 3.5)
+print(splot_edited)
+ggsave(filename = "(220318) - calibration plot.png", plot = splot_edited,width = 3.5, height = 3.5)

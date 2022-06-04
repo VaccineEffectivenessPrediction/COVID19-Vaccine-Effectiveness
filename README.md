@@ -1,6 +1,6 @@
 # COVID19-Vaccine-Effectiveness
 
-R codes for the article "Rapid evaluation of COVID-19 vaccine effectiveness against SARS-CoV-2 variants by genetic distance"
+R codes for the article "Rapid evaluation of COVID-19 vaccine effectiveness against symptomatic infection with SARS-CoV-2 variants by analysis of genetic distance".
 
 This repository includes the following three folders:
   Step 1 Preparing data;

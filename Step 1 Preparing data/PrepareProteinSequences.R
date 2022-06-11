@@ -32,7 +32,7 @@ read.fas <- function(fastaName,st,ed,protein,path) {
   sel_seq <- as.data.frame(sel_seq)
   sel_seq <- sel_seq[-1,] # Wuhan reference sequence used in multiple sequence alignment
   index_seq <- duplicated(sel_seq$strain_names)
-  nodup_seq <- sel.seq[!index_seq,]
+  nodup_seq <- sel_seq[!index_seq,]
   seq_order <- nodup_seq[order(nodup_seq$date),]
   str_name <- strsplit(fastaName,".fas")
   out_fileName <- paste(str_name[[1]][1],"_",protein, ".csv", sep='')
@@ -49,8 +49,8 @@ orf <- paste("nsp",n,sep = "")
 pr <- c(orf,"nsp12-1","S","ORF3a","E","M","ORF6","ORF7a","ORF7b","ORF8","N","ORF10")
 prot <- paste("SARS-CoV-2",pr,"protein",sep=" ")
 
-s.all <- c(266,806,2720,8555,10055,10973,11843,12092,12686,13025,13442,13468,16237,18040,19621,20659,13442,21563,25393,26245,26523,27202,27394,27756,27894,28274,29558)
-e.all <- c(805,2719,8554,10054,10972,11842,12091,12685,13024,13441,13480,16236,18039,19620,20658,21552,13468,25384,26220,26472,27191,27387,27759,27887,28259,29533,29674)
+s_all <- c(266,806,2720,8555,10055,10973,11843,12092,12686,13025,13442,13468,16237,18040,19621,20659,13442,21563,25393,26245,26523,27202,27394,27756,27894,28274,29558)
+e_all <- c(805,2719,8554,10054,10972,11842,12091,12685,13024,13441,13480,16236,18039,19620,20658,21552,13468,25384,26220,26472,27191,27387,27759,27887,28259,29533,29674)
 
 # set output path
 
@@ -58,8 +58,8 @@ e.all <- c(805,2719,8554,10054,10972,11842,12091,12685,13024,13441,13480,16236,1
 for (p in 1:length(prot)) {
   outpath <- paste(path,prot[p],sep = "/")
   dir.create(outpath)
-  s <- s.all[p]
-  e <- e.all[p]
+  s <- s_all[p]
+  e <- e_all[p]
   protein <- c(pr[p])
   for (n in 1:length(fasfiles) {  
     read.fas(fasfiles[n],s,e,protein,outpath)

@@ -52,7 +52,7 @@ gd.nonS <- <- function(fn,vaccine,outpath,prot) {
     aa <- c()
     for (n in 1:length(sel_pv[,1])) {
       s <- rn[[n]][1]
-      a<- rn[[n]][2]
+      a <- rn[[n]][2]
       site <- c(site,s)
       aa <- c(aa,a)
     }
